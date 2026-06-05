@@ -344,11 +344,10 @@
         </div>
         <div>
           <form id="contactForm" onsubmit="return submitForm(event)">
-            <div class="field"><label for="n">Name</label><input id="n" type="text" required placeholder="Your name"></div>
-            <div class="field"><label for="e">Email</label><input id="e" type="email" required placeholder="you@company.com"></div>
-            <div class="field"><label for="m">Project details</label><textarea id="m" required placeholder="Project, location, timeline."></textarea></div>
+            <div class="field"><label for="e">Your email</label><input id="e" type="email" required autocomplete="email" placeholder="you@company.com"></div>
+            <div class="field"><label for="m">Your message</label><textarea id="m" required placeholder="Tell us about the project, location, and timeline."></textarea></div>
             <button class="btn" type="submit">Send inquiry →</button>
-            <p class="form-note" id="formNote">// or email pbautista@beargroupdcm.com directly</p>
+            <p class="form-note" id="formNote">// opens a pre-filled email to pbautista@beargroupdcm.com</p>
           </form>
         </div>
       </div>
@@ -372,10 +371,10 @@
   mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mb.classList.remove('open');mm.classList.remove('open')}));
   function submitForm(e){
     e.preventDefault();
-    const n=document.getElementById('n').value,en=document.getElementById('e').value,m=document.getElementById('m').value;
-    const body=encodeURIComponent('From: '+n+' ('+en+')\n\n'+m);
-    document.getElementById('formNote').textContent='// thanks '+n.split(' ')[0]+' — opening your email client';
-    window.location.href='mailto:pbautista@beargroupdcm.com?subject='+encodeURIComponent('Project inquiry — '+n)+'&body='+body;
+    const en=document.getElementById('e').value.trim(),m=document.getElementById('m').value.trim();
+    const body=encodeURIComponent('From: '+en+'\n\nMessage:\n'+m);
+    document.getElementById('formNote').textContent='// opening your email client with the message filled in';
+    window.location.href='mailto:pbautista@beargroupdcm.com?subject='+encodeURIComponent('Project inquiry from website')+'&body='+body;
     return false;
   }
 </script>
