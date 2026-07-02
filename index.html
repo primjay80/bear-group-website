@@ -259,8 +259,45 @@
   /* brand band + footer logo */
   .brandband{padding:88px 0 96px;border-bottom:0}
   .bb-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px}
-  .bb-logo{width:min(560px,82%);height:auto}
+  .bb-logo-wrap{position:relative;width:min(560px,82%)}
+  .bb-logo{position:relative;z-index:3;width:100%;height:auto}
   .bb-cap{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);line-height:1.6}
+  .bb-logo-wrap::before,.bb-logo-wrap::after{content:"";position:absolute;left:50%;z-index:2;width:0;height:2px;background:#186CF2;box-shadow:0 0 18px rgba(24,108,242,.48);transform:translateX(-50%);opacity:0}
+  .bb-logo-wrap::before{top:-18px}
+  .bb-logo-wrap::after{bottom:-18px}
+  .bb-scan-line{position:absolute;top:-38px;bottom:-38px;left:-30px;z-index:5;width:3px;background:linear-gradient(transparent,rgba(255,255,255,.86),#186CF2,rgba(255,255,255,.9),transparent);box-shadow:0 0 14px rgba(24,108,242,.88),0 0 34px rgba(24,108,242,.42);opacity:0}
+  .bb-scan-wake{position:absolute;inset:-28px -24px;z-index:4;background:linear-gradient(90deg,transparent,rgba(24,108,242,.18),rgba(255,255,255,.14),transparent);opacity:0;transform:translateX(-55%) skewX(-10deg);pointer-events:none}
+  .brandband.is-ready:not(.is-visible) .bb-logo{opacity:0;transform:translateY(18px);filter:blur(8px) grayscale(1) contrast(.65) brightness(1.4)}
+  .brandband.is-visible .bb-logo{animation:bbLogoReveal 6.8s ease-in-out both}
+  .brandband.is-visible .bb-logo-wrap::before,.brandband.is-visible .bb-logo-wrap::after{animation:bbPrecisionLines 6.8s cubic-bezier(.18,.9,.22,1) both}
+  .brandband.is-visible .bb-scan-line{animation:bbScanLine 6.8s cubic-bezier(.18,.8,.2,1) both}
+  .brandband.is-visible .bb-scan-wake{animation:bbScanWake 6.8s cubic-bezier(.18,.8,.2,1) both}
+  @keyframes bbLogoReveal{
+    0%,16%{opacity:0;transform:translateY(18px);filter:blur(8px) grayscale(1) contrast(.65) brightness(1.4)}
+    28%,48%{opacity:.3;transform:translateY(0);filter:blur(0) grayscale(1) contrast(.72) brightness(1.35)}
+    68%,100%{opacity:1;transform:translateY(0);filter:blur(0) grayscale(0) contrast(1) brightness(1)}
+  }
+  @keyframes bbPrecisionLines{
+    0%,10%{width:0;opacity:0}
+    18%,56%{width:110%;opacity:1}
+    72%,100%{width:110%;opacity:0}
+  }
+  @keyframes bbScanLine{
+    0%,45%{left:-34px;opacity:0}
+    49%{opacity:1}
+    68%{left:calc(100% + 34px);opacity:1}
+    76%,100%{left:calc(100% + 34px);opacity:0}
+  }
+  @keyframes bbScanWake{
+    0%,45%{opacity:0;transform:translateX(-60%) skewX(-10deg)}
+    52%{opacity:1}
+    70%{opacity:.6;transform:translateX(42%) skewX(-10deg)}
+    82%,100%{opacity:0;transform:translateX(60%) skewX(-10deg)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .brandband.is-ready:not(.is-visible) .bb-logo,.brandband.is-visible .bb-logo{opacity:1;transform:none;filter:none;animation:none}
+    .brandband.is-visible .bb-logo-wrap::before,.brandband.is-visible .bb-logo-wrap::after,.brandband.is-visible .bb-scan-line,.brandband.is-visible .bb-scan-wake{animation:none;opacity:0}
+  }
   .foot-logo{height:30px;width:auto;display:block;margin-bottom:22px}
 
   @media(min-width:680px){
@@ -458,7 +495,11 @@
   <section class="block brandband">
     <div class="wrap bb-inner">
       <span class="bb-cap">// Bear Group — Design + Construction Management</span>
-      <img class="bb-logo" src="assets/logo-bgdcm.png" alt="Bear Group DCM">
+      <div class="bb-logo-wrap" aria-label="Bear Group DCM animated logo">
+        <img class="bb-logo" src="assets/logo-bgdcm.png" alt="Bear Group DCM">
+        <span class="bb-scan-wake" aria-hidden="true"></span>
+        <span class="bb-scan-line" aria-hidden="true"></span>
+      </div>
       <span class="bb-cap">6800 Wisconsin Ave #1110 &nbsp;—&nbsp; Chevy Chase, MD 20815 &nbsp;—&nbsp; Est. 2026</span>
     </div>
   </section>
@@ -481,6 +522,20 @@
   const mb=document.getElementById('menuBtn'),mm=document.getElementById('mobileMenu');
   mb.addEventListener('click',()=>{mb.classList.toggle('open');mm.classList.toggle('open')});
   mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mb.classList.remove('open');mm.classList.remove('open')}));
+  const brandBand=document.querySelector('.brandband');
+  if(brandBand){
+    brandBand.classList.add('is-ready');
+    if('IntersectionObserver' in window){
+      const brandObserver=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          brandBand.classList.toggle('is-visible',entry.isIntersecting);
+        });
+      },{threshold:.45});
+      brandObserver.observe(brandBand);
+    }else{
+      brandBand.classList.add('is-visible');
+    }
+  }
   function submitForm(e){
     e.preventDefault();
     const en=document.getElementById('e').value.trim(),m=document.getElementById('m').value.trim();
