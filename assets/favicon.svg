@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bear Group DCM">
+  <rect width="64" height="64" rx="10" fill="#15181C"/>
+  <path fill="#186CF2" d="M15 14h17c7 0 12 4 12 10 0 3-1 6-4 8 4 2 7 5 7 10 0 7-5 11-13 11H15V14Zm10 15h7c3 0 5-2 5-4s-2-4-5-4h-7v8Zm0 17h8c4 0 6-2 6-5s-2-5-6-5h-8v10Z"/>
+  <path fill="#F5F6F8" d="M49 14h5v39h-5V14Z"/>
+</svg>

@@ -14,8 +14,13 @@ There are two ways to use this folder:
 ```
 bear-group-website/
 ├── index.html        ← the entire website (structure, styling, and interactions)
+├── robots.txt        ← tells search engines they may index the site
+├── sitemap.xml       ← lists the public homepage URL for search engines
+├── site.webmanifest  ← browser/app metadata and favicon reference
+├── tests/            ← small verification scripts for SEO metadata
 ├── assets/           ← images & logos used by the page
 │   ├── logo-bgdcm.png            (the BGDCM logo — transparent background)
+│   ├── favicon.svg               (browser tab icon)
 │   ├── hero-rotating-1.jpg       (homepage hero rotation images)
 │   ├── hero-rotating-2.jpg
 │   ├── hero-rotating-3.jpg
@@ -47,6 +52,17 @@ bear-group-website/
 
 1. **The project photos are placeholders.** The images in `assets/proj-*.png` are stand-ins to show the layout. Replace them with real, licensed photography of the actual projects before launch. To swap one, just drop a new image into `assets/` with the **same filename** (or update the `src="assets/…"` reference in `index.html`).
 2. **The contact form opens the visitor's email app — it does not send mail to a server.** When someone clicks "Send inquiry," it pre-fills an email to `pbautista@beargroupdcm.com`. That works everywhere with zero setup, but if you want submissions captured automatically (e.g. into a spreadsheet or inbox), connect a free form service like **Formspree** or **Basin**, or add a serverless function. An AI coding assistant can wire this up in a few minutes — see Option B.
+3. **Confirm the final primary domain before submitting to Google.** The SEO metadata currently assumes the public site will use `https://beargroupdcm.com/`. If Vercel is configured to prefer `https://www.beargroupdcm.com/`, update `index.html`, `robots.txt`, and `sitemap.xml` before submitting the sitemap to Google Search Console.
+
+### SEO verification
+
+After SEO-related edits, run:
+
+```bash
+node tests/seo-metadata.test.mjs
+```
+
+This checks the page title, meta description, social-share tags, structured business data, favicon, `robots.txt`, and `sitemap.xml`.
 
 ---
 

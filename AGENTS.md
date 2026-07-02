@@ -46,6 +46,14 @@ For early PJ website review, prefer a temporary Vercel deployment URL first, suc
 
 Do not use Bells Mill PTA Vercel, Google, GitHub, or email identities for Vercel access. If Vercel login is needed, ask for a Bear Group / PJ-specific account or a browser-based workflow.
 
+## SEO and Domain Metadata
+
+The site currently includes SEO metadata, JSON-LD business schema, `robots.txt`, `sitemap.xml`, `site.webmanifest`, and an SVG favicon. These URL-specific tags assume the final public domain will be `https://beargroupdcm.com/`.
+
+After the Vercel project and custom domain are connected, verify the primary domain choice in Vercel. If Vercel uses `https://www.beargroupdcm.com/` instead, update the canonical URL, Open Graph URL/image URLs, JSON-LD `url`/`logo`/`image`, `robots.txt`, and `sitemap.xml` to match the primary domain.
+
+PJ currently has no social channels. Do not add `sameAs` social profile links to JSON-LD unless real official channels are created later.
+
 ## Project List Visibility
 
 PJ is not ready to publicly list specific projects yet. Keep the visible site free of the project index, `/ work` navigation link, and notable past-project list unless the user explicitly asks to restore them.
