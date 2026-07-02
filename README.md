@@ -14,8 +14,13 @@ There are two ways to use this folder:
 ```
 bear-group-website/
 ├── index.html        ← the entire website (structure, styling, and interactions)
-├── assets/           ← all 16 images & logos used by the page
+├── assets/           ← images & logos used by the page
 │   ├── logo-bgdcm.png            (the BGDCM logo — transparent background)
+│   ├── hero-rotating-1.jpg       (homepage hero rotation images)
+│   ├── hero-rotating-2.jpg
+│   ├── hero-rotating-3.jpg
+│   ├── hero-rotating-4.jpg
+│   ├── hero-rotating-5.jpg
 │   ├── client-jbgsmith.png       (client logos…)
 │   ├── client-davis.svg
 │   ├── client-tower.svg

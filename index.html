@@ -60,7 +60,7 @@
   .nav-links{display:none;gap:6px;align-items:center}
   .nav-links a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-2);padding:8px 12px;transition:.2s}
   .nav-links a:hover{color:var(--ink);background:rgba(21,24,28,.05)}
-  .nav-links a.btn{color:#fff}
+  .nav-links a.btn{color:#fff;transform:translateY(4px)}
   .btn{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;padding:11px 18px;background:var(--ink);color:#fff;border:1px solid var(--ink);cursor:pointer;white-space:nowrap;transition:.2s;text-transform:uppercase;letter-spacing:.03em}
   .btn:hover{background:transparent;color:var(--ink)}
   .btn svg{width:13px;height:13px}
@@ -75,20 +75,36 @@
   .mobile-menu .btn{margin:16px var(--pad);justify-content:center}
 
   /* hero */
-  .hero{position:relative;border-bottom:1px solid var(--line-strong);overflow:hidden}
-  .hero-inner{position:relative;padding:48px 0 0}
-  .coord{position:absolute;top:14px;right:var(--pad);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-2);text-align:right;line-height:1.7;display:none}
-  .hero h1{font-size:clamp(34px,8vw,76px);font-weight:500;line-height:1.0;letter-spacing:-.03em;margin:18px 0 26px;text-wrap:balance}
-  .hero h1 .accent{color:var(--accent)}
-  .hero-sub{max-width:560px;color:var(--ink-2);font-size:clamp(15px,2vw,18px);margin-bottom:30px}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
-  .spec-bar{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line)}
-  .spec{padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.5)}
-  .spec .label{display:block;margin-bottom:6px}
+  .hero{position:relative;min-height:calc(100svh - 60px);border-bottom:1px solid var(--line-strong);overflow:hidden;background:#111}
+  .hero-inner{position:relative;z-index:2;display:flex;min-height:calc(100svh - 60px);flex-direction:column;justify-content:center;padding:72px var(--pad) 0;color:#fff;text-shadow:0 3px 22px rgba(0,0,0,.62)}
+  .hero-inner::before{content:"";position:absolute;inset:0 auto 0 0;width:min(900px,94vw);background:linear-gradient(90deg,rgba(0,0,0,.58),rgba(0,0,0,.34) 44%,rgba(0,0,0,.08));z-index:-1}
+  .coord{position:absolute;top:18px;right:var(--pad);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:rgba(255,255,255,.96);text-align:right;line-height:1.7;display:none;padding:8px 10px;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);text-shadow:0 2px 10px rgba(0,0,0,.65)}
+  .hero-inner > .label{align-self:flex-start;color:rgba(255,255,255,.96);padding:6px 10px;background:rgba(0,0,0,.34);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);text-shadow:0 2px 10px rgba(0,0,0,.65)}
+  .hero h1{max-width:820px;font-size:clamp(42px,8vw,96px);font-weight:600;line-height:.96;letter-spacing:-.02em;margin:18px 0 26px;text-wrap:balance}
+  .hero h1 .accent{color:#fff}
+  .hero-sub{max-width:590px;color:rgba(255,255,255,.96);font-size:clamp(15px,2vw,18px);margin-bottom:40px;padding:12px 14px;background:rgba(0,0,0,.24);border-left:2px solid rgba(255,255,255,.58);text-shadow:0 2px 12px rgba(0,0,0,.72)}
+  .spec-bar{display:grid;grid-template-columns:repeat(2,1fr);margin-top:auto;border-top:1px solid rgba(255,255,255,.48);border-left:1px solid rgba(255,255,255,.24);text-shadow:none}
+  .spec{padding:16px 18px;border-right:1px solid rgba(255,255,255,.32);border-bottom:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.82);backdrop-filter:blur(12px);color:var(--ink)}
+  .spec .label{display:block;margin-bottom:6px;color:#39414A;font-weight:700;letter-spacing:.08em;text-shadow:none}
   .spec b{font-size:18px;font-weight:600}
-  .hero-figure{position:relative;margin-top:0;border-top:1px solid var(--line-strong)}
-  .hero-figure img{width:100%;aspect-ratio:21/9;object-fit:cover}
-  .figtag{position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 14px;letter-spacing:.04em}
+  .hero-figure{position:absolute;inset:0;margin:0}
+  .hero-figure::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,.08) 42%,rgba(0,0,0,.12))}
+  .hero-figure img{width:100%;height:100%;object-fit:cover}
+  .hero-slide{position:absolute;inset:0;opacity:0;animation:heroFade 40s infinite}
+  .hero-slide:nth-child(1){animation-delay:0s}
+  .hero-slide:nth-child(2){animation-delay:8s}
+  .hero-slide:nth-child(3){animation-delay:16s}
+  .hero-slide:nth-child(4){animation-delay:24s}
+  .hero-slide:nth-child(5){animation-delay:32s}
+  @keyframes heroFade{
+    0%,18%{opacity:1}
+    23%,100%{opacity:0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .hero-slide{animation:none}
+    .hero-slide:first-child{opacity:1}
+  }
+  .figtag{display:none}
 
   /* sections */
   section{padding:0}
@@ -106,6 +122,15 @@
   .svc-row .svc-id{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);margin-bottom:10px}
   .svc-row h3{font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
   .svc-row p{color:var(--ink-2);font-size:14.5px;max-width:760px}
+  .service-board{border:1px solid var(--line-strong);background:var(--panel)}
+  .service-top{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--line-strong)}
+  .service-card{padding:18px 20px;border-bottom:1px solid var(--line)}
+  .service-card:last-child{border-bottom:0}
+  .service-card .eyebrow{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px}
+  .service-card strong{display:block;font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .service-list{display:grid;grid-template-columns:1fr;padding:22px 20px;gap:14px 38px}
+  .service-list li{list-style:none;position:relative;padding-left:26px;font-size:18px;font-weight:500;letter-spacing:-.01em}
+  .service-list li::before{content:"";position:absolute;left:0;top:.72em;width:14px;height:2px;background:var(--accent);transform:rotate(-24deg);transform-origin:left center}
 
   /* projects = drawing sheets */
   .proj-grid{display:grid;grid-template-columns:1fr;gap:20px}
@@ -137,21 +162,29 @@
   .ledger-row .v{font-weight:700;font-size:15px}
 
   .client-grid{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--line-strong);background:var(--panel)}
-  .client-cell{display:flex;align-items:center;justify-content:center;padding:32px 20px;min-height:118px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .client-cell img{max-height:44px;max-width:150px;width:auto;filter:grayscale(1);opacity:.62;transition:.3s}
-  .client-cell:hover img{filter:none;opacity:1}
-  .client-cell img.lg-jbg{max-height:62px;max-width:170px}
-  .client-cell img.lg-brighter{max-height:92px;max-width:160px}
+  .client-cell{display:flex;align-items:center;justify-content:center;padding:30px 12px;min-height:132px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .client-cell img{max-height:54px;max-width:82%;width:auto;filter:none;opacity:1;transition:.3s}
+  .client-cell:hover img{transform:scale(1.03)}
+  .client-cell img.lg-jbg{max-height:82px}
+  .client-cell img.lg-brighter{max-height:96px}
 
   /* notable */
-  .notable{margin-top:48px}
-  .notable .label{margin-bottom:18px;display:block}
+  .notable{margin-top:56px}
+  .notable .label{margin-bottom:18px;display:block;color:var(--ink-2)}
   .build-grid{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line-strong);background:var(--panel)}
   .build{padding:18px 16px;border-bottom:1px solid var(--line)}
   .build:last-child{border-bottom:0}
   .build .bn{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
   .tags{display:flex;flex-wrap:wrap;gap:6px}
   .tags span{font-size:12.5px;font-family:'IBM Plex Mono',monospace;color:var(--ink-2);background:var(--bg);border:1px solid var(--line);padding:5px 9px}
+  .past-grid{counter-reset:past;display:grid;grid-template-columns:1fr;border:1px solid var(--line-strong);background:var(--panel)}
+  .past-group{counter-increment:past;display:flex;flex-direction:column;border-bottom:1px solid var(--line);background:rgba(255,255,255,.74)}
+  .past-group:last-child{border-bottom:0}
+  .past-group h3{display:flex;align-items:center;gap:12px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line);font-size:17px;font-weight:600;letter-spacing:-.01em}
+  .past-group h3::before{content:"P-" counter(past, decimal-leading-zero);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
+  .past-group h3 span{border-bottom:1.5px solid currentColor}
+  .past-group ul{display:flex;flex-wrap:wrap;align-content:flex-start;gap:7px;padding:16px}
+  .past-group li{list-style:none;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.25;color:var(--ink-2);background:var(--bg);border:1px solid var(--line);padding:6px 8px}
 
   /* contact */
   .contact{background:var(--ink);color:#fff;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:44px 44px}
@@ -179,7 +212,7 @@
   .foot-meta{display:flex;flex-wrap:wrap;gap:6px 20px}
 
   /* brand band + footer logo */
-  .brandband{padding:84px 0}
+  .brandband{padding:88px 0 96px;border-bottom:0}
   .bb-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px}
   .bb-logo{width:min(560px,82%);height:auto}
   .bb-cap{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);line-height:1.6}
@@ -191,6 +224,10 @@
     .proj-grid{grid-template-columns:repeat(2,1fr)}
     .about-grid{grid-template-columns:1.2fr .8fr;gap:48px}
     .client-grid{grid-template-columns:repeat(3,1fr)}
+    .client-cell{padding:36px 22px;min-height:138px}
+    .client-cell img{max-height:58px;max-width:190px}
+    .client-cell img.lg-jbg{max-height:86px;max-width:210px}
+    .client-cell img.lg-brighter{max-height:110px;max-width:190px}
     .build-grid{grid-template-columns:repeat(2,1fr)}
     .build:nth-child(1){border-right:1px solid var(--line)}
     .contact-grid{grid-template-columns:1fr 1fr;gap:56px}
@@ -201,11 +238,19 @@
     :root{--pad:44px}
     .nav-links{display:flex}
     .menu-btn{display:none}
-    .hero-inner{padding:64px 0 0}
+    .hero-inner{padding:64px var(--pad) 0}
     .proj-grid{grid-template-columns:repeat(3,1fr)}
     .sheet.tall{grid-row:span 1}
     .svc-row{grid-template-columns:200px 1fr;gap:28px;align-items:start}
     .svc-row .svc-meta{display:flex;flex-direction:column}
+    .service-top{grid-template-columns:1.05fr .9fr 1fr 1fr}
+    .service-card{border-bottom:0;border-right:1px solid var(--line)}
+    .service-card:last-child{border-right:0}
+    .service-list{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,auto);grid-auto-flow:column;padding:30px 34px}
+    .past-grid{grid-template-columns:repeat(3,1fr)}
+    .past-group{min-height:190px;border-right:1px solid var(--line)}
+    .past-group:nth-child(3n){border-right:0}
+    .past-group:nth-last-child(-n+3){border-bottom:0}
   }
 </style>
 </head>
@@ -239,11 +284,8 @@
     <div class="wrap hero-inner">
       <div class="coord">38.9072° N, 77.0369° W<br>WASHINGTON D.C. METRO<br>EST. 2026</div>
       <div class="label">[ 00 ] — Design &amp; Construction Management</div>
-      <h1 id="heroHeadline">Commanding complex builds,<br><span class="accent">delivering proven results.</span></h1>
+      <h1 id="heroHeadline">Trusted leadership,<br><span class="accent">built into every project.</span></h1>
       <p class="hero-sub">Bear Group operates as an extension of ownership — anticipating challenges, protecting budgets, and moving retail and mixed-use projects decisively through every phase.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn">Start a project<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
       <div class="spec-bar">
         <div class="spec"><span class="label">Experience</span><b>20+ Years</b></div>
         <div class="spec"><span class="label">Active Projects</span><b>10 Live</b></div>
@@ -252,7 +294,11 @@
       </div>
     </div>
     <figure class="hero-figure">
-      <img src="assets/proj-westhalf.png" alt="Retail and mixed-use building exterior">
+      <img class="hero-slide" src="assets/hero-rotating-1.jpg" alt="Retail and mixed-use building exterior rendering">
+      <img class="hero-slide" src="assets/hero-rotating-2.jpg" alt="" aria-hidden="true">
+      <img class="hero-slide" src="assets/hero-rotating-3.jpg" alt="" aria-hidden="true">
+      <img class="hero-slide" src="assets/hero-rotating-4.jpg" alt="" aria-hidden="true">
+      <img class="hero-slide" src="assets/hero-rotating-5.jpg" alt="" aria-hidden="true">
       <figcaption class="figtag">FIG. 01 — WASHINGTON D.C. METRO</figcaption>
     </figure>
   </section>
@@ -263,14 +309,25 @@
       <div class="sec-head">
         <span class="idx">[01]</span>
         <h2>Scope of services</h2>
-        <p class="note">// A single point of accountability, from lease negotiation through project closeout.</p>
+        <p class="note">// A single point of accountability, from concept design to construction through project closeout.</p>
       </div>
-      <div class="svc-table">
-        <div class="svc-row"><div class="svc-meta"><div class="svc-id">SVC-01</div></div><div><h3>Lease Negotiations</h3><p>Support the leasing team through negotiation, customize work letters to project specifics, produce feasibility test-fits, and introduce design criteria and MEP requirements to prospective tenants.</p></div></div>
-        <div class="svc-row"><div class="svc-meta"><div class="svc-id">SVC-02</div></div><div><h3>Design Management</h3><p>Track design and permit milestones in conformance with the lease, review tenant drawings for compliance and aesthetic alignment, and verify MEP drawings against base-building capacity.</p></div></div>
-        <div class="svc-row"><div class="svc-meta"><div class="svc-id">SVC-03</div></div><div><h3>Construction Management</h3><p>On-site management of tenant construction to monitor progress, with review of the construction budget, GC qualifications, and schedule.</p></div></div>
-        <div class="svc-row"><div class="svc-meta"><div class="svc-id">SVC-04</div></div><div><h3>Budgeting</h3><p>Establish landlord work budgets — soft and hard costs — from historical data and contractor input, review and process TI submissions, and procure and manage consultant contracts.</p></div></div>
-        <div class="svc-row"><div class="svc-meta"><div class="svc-id">SVC-05</div></div><div><h3>Retail Scope of Work</h3><p>Maintain the retail lease tracker and prepare weekly reports for client review, keeping ownership informed at every milestone.</p></div></div>
+      <div class="service-board">
+        <div class="service-top">
+          <div class="service-card"><span class="eyebrow">Practice</span><strong>Project / Construction Management</strong></div>
+          <div class="service-card"><span class="eyebrow">Clients</span><strong>Developers / Tenants</strong></div>
+          <div class="service-card"><span class="eyebrow">Markets</span><strong>DC · MD · VA</strong></div>
+          <div class="service-card"><span class="eyebrow">Focus</span><strong>Retail / Mixed-Use</strong></div>
+        </div>
+        <ul class="service-list">
+          <li>Owner's Representation</li>
+          <li>Design Management</li>
+          <li>Construction Management</li>
+          <li>Scheduling / Forecasting</li>
+          <li>Contract Bidding / Procurement</li>
+          <li>Budgeting / Pricing Analysis</li>
+          <li>Work Letter Customization</li>
+          <li>Project Close-Out / Client Opening</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -288,6 +345,7 @@
           <p class="about-lead">Twenty-plus years delivering complex, high-value retail projects across the <span class="accent">Washington, D.C.</span> metropolitan area.</p>
           <div class="about-body">
             <p>PJ Bautista founded Bear Group in 2026, bringing with him a distinguished career in retail design and construction. Most recently, he served as Director of Retail Design &amp; Construction at JBG Smith, where he was the primary point of contact for a portfolio of high-profile retail projects — overseeing the full tenant lifecycle from base-building design and lease negotiation through construction and closeout.</p>
+            <p>Prior to transitioning into real estate development, PJ spent 13 years as an architectural designer in the Washington, DC area. His multidisciplinary background combines design expertise, financial insight, and construction management experience, allowing him to bridge the gap between vision, budgeting, and execution while delivering successful projects.</p>
             <p>Throughout his career, PJ has earned a reputation for delivering projects on time and in alignment with ownership objectives, building lasting trust with stakeholders and tenants alike. His deep-rooted relationships with permitting agencies, general contractors, architects, and consultants are the cornerstone of how Bear Group operates today.</p>
           </div>
         </div>
@@ -308,25 +366,27 @@
       <div class="sec-head">
         <span class="idx">[03]</span>
         <h2>Current clients</h2>
-        <p class="note">// Owners and operators across the region.</p>
+        <p class="note">// Owners and operators.</p>
       </div>
       <div class="client-grid">
         <div class="client-cell"><img class="lg-jbg" src="assets/client-jbgsmith.png" alt="JBG Smith"></div>
         <div class="client-cell"><img src="assets/client-davis.svg" alt="The Davis Companies"></div>
         <div class="client-cell"><img src="assets/client-tower.svg" alt="The Tower Companies"></div>
-        <div class="client-cell"><img src="assets/client-redbrick.png" alt="Redbrick LMD"></div>
         <div class="client-cell"><img class="lg-brighter" src="assets/client-brighterdays.png" alt="Brighter Days Recovery Center"></div>
         <div class="client-cell"><img src="assets/client-moleskine.png" alt="Moleskine"></div>
+        <div class="client-cell"><img src="assets/client-redbrick.png" alt="Redbrick LMD"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- BRAND -->
-  <section class="block brandband">
-    <div class="wrap bb-inner">
-      <span class="bb-cap">// Bear Group — Design + Construction Management</span>
-      <img class="bb-logo" src="assets/logo-bgdcm.png" alt="Bear Group DCM">
-      <span class="bb-cap">38.9072° N · 77.0369° W &nbsp;—&nbsp; Washington D.C. Metro &nbsp;—&nbsp; Est. 2026</span>
+      <div class="notable">
+        <span class="label">// Notable past projects — JBG Smith retail, 2017–2024</span>
+        <div class="past-grid">
+          <article class="past-group"><h3><span>1221 Van Street</span></h3><ul><li>Mission Dos</li><li>Walter's Sports Bar</li><li>Boombox</li><li>District Dogs</li></ul></article>
+          <article class="past-group"><h3><span>West Half</span></h3><ul><li>Royal Sands</li><li>Gatsby</li><li>Basebowl</li><li>Dukes Grocery</li><li>Atlas Brew Works</li><li>Cold Stone Creamery</li><li>Compass Coffee</li></ul></article>
+          <article class="past-group"><h3><span>Central Place</span></h3><ul><li>Open Road / Salt</li><li>Cava</li><li>Sweetgreen</li><li>Little Beet</li><li>Happy Eatery</li><li>Nandos</li><li>Bethesda Bagels</li></ul></article>
+          <article class="past-group"><h3><span>1900 Crystal Drive</span></h3><ul><li>Bar Colline</li><li>Bar Chinois</li><li>Van Leeuwen Ice Cream</li><li>Drybar</li><li>Tatte Bakery</li><li>Colada Shop</li><li>Nail Saloon</li><li>Flight Wine Shop</li><li>Vanilla Box #20</li><li>Vanilla Box #85</li></ul></article>
+          <article class="past-group"><h3><span>Mets Amazon HQ2</span></h3><ul><li>Good Company</li><li>Conte's Bike Shop</li><li>GLO30</li><li>South Block</li><li>Celebree</li><li>Maker's Union</li><li>Toby's Ice Cream</li><li>Peruvian Brothers</li><li>District Dogs</li><li>Taqueria Xochi</li></ul></article>
+          <article class="past-group"><h3><span>Eckington</span></h3><ul><li>Bouldering Project</li><li>She Love's Me</li><li>Vanilla Box #170</li></ul></article>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -337,11 +397,9 @@
       <div class="contact-grid">
         <div>
           <h2>Start a<br>conversation.</h2>
-          <p class="contact-lead">Leasing strategy, a tenant buildout, or a full landlord scope — tell us what you're planning. We respond within one business day.</p>
           <div class="direct">
             <a href="mailto:pbautista@beargroupdcm.com"><span class="k">Email</span><span class="v">pbautista@beargroupdcm.com</span></a>
-            <a href="tel:+12024459764"><span class="k">Phone</span><span class="v">202.445.9764</span></a>
-            <a href="#"><span class="k">Location</span><span class="v">Washington, D.C. Metro</span></a>
+            <a href="#"><span class="k">Address</span><span class="v">6800 Wisconsin Ave #1110<br>Chevy Chase, MD 20815</span></a>
           </div>
         </div>
         <div>
@@ -355,40 +413,21 @@
       </div>
     </div>
   </section>
-</main>
 
-<footer>
-  <div class="wrap">
-    <img class="foot-logo" src="assets/logo-bgdcm.png" alt="Bear Group DCM">
-    <div class="foot">
-      <span>BEAR GROUP DCM — © 2026</span>
-      <div class="foot-meta"><span>pbautista@beargroupdcm.com</span><span>202.445.9764</span><span>WASHINGTON D.C.</span></div>
+  <!-- BRAND -->
+  <section class="block brandband">
+    <div class="wrap bb-inner">
+      <span class="bb-cap">// Bear Group — Design + Construction Management</span>
+      <img class="bb-logo" src="assets/logo-bgdcm.png" alt="Bear Group DCM">
+      <span class="bb-cap">6800 Wisconsin Ave #1110 &nbsp;—&nbsp; Chevy Chase, MD 20815 &nbsp;—&nbsp; Est. 2026</span>
     </div>
-  </div>
-</footer>
+  </section>
+</main>
 
 <script>
   const mb=document.getElementById('menuBtn'),mm=document.getElementById('mobileMenu');
   mb.addEventListener('click',()=>{mb.classList.toggle('open');mm.classList.toggle('open')});
   mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mb.classList.remove('open');mm.classList.remove('open')}));
-  const heroHeadlines=[
-    'Built environments,<br>delivered with <span class="accent">precision</span>.',
-    'Commanding complex builds,<br><span class="accent">delivering proven results.</span>',
-    'Expert oversight,<br><span class="accent">measurable outcomes.</span>',
-    'Trusted leadership,<br><span class="accent">built into every project.</span>',
-    'Where complexity meets<br><span class="accent">experienced control.</span>',
-    'Built on expertise,<br><span class="accent">driven by results.</span>'
-  ];
-  const heroHeadline=document.getElementById('heroHeadline');
-  if(heroHeadline){
-    let idx=Math.floor(Math.random()*heroHeadlines.length);
-    try{
-      const prev=Number(localStorage.getItem('bearGroupHeroHeadlineIndex'));
-      if(Number.isInteger(prev)&&prev>=0&&prev<heroHeadlines.length) idx=(prev+1)%heroHeadlines.length;
-      localStorage.setItem('bearGroupHeroHeadlineIndex',String(idx));
-    }catch(err){}
-    heroHeadline.innerHTML=heroHeadlines[idx];
-  }
   function submitForm(e){
     e.preventDefault();
     const en=document.getElementById('e').value.trim(),m=document.getElementById('m').value.trim();

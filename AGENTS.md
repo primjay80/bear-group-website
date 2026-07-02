@@ -52,6 +52,8 @@ PJ is not ready to publicly list specific projects yet. Keep the visible site fr
 
 The parked restore copy lives in `docs/parked-content/project-work-sections.html`.
 
+Update from PJ's annotated PDF reviewed on 2026-07-02: PJ approved bringing back the notable past projects content in a boxed/grouped layout, with each property name underlined and the corresponding retailers listed underneath. This approval applies to the notable past projects section, not necessarily to the full `/ work` project index/navigation unless PJ separately approves that.
+
 ## AGENTS.md Maintenance Rule
 
 This repo-level `AGENTS.md` is the real handoff copy. It should travel with the GitHub repo so PJ or another helper can maintain the site later.
