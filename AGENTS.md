@@ -46,6 +46,12 @@ For early PJ website review, prefer a temporary Vercel deployment URL first, suc
 
 Do not use Bells Mill PTA Vercel, Google, GitHub, or email identities for Vercel access. If Vercel login is needed, ask for a Bear Group / PJ-specific account or a browser-based workflow.
 
+## Current Launch State
+
+As of 2026-07-04, the site is deployed in Vercel under `primjay/bear-group-website`, connected to GitHub repo `primjay80/bear-group-website`, with production domains `beargroupdcm.com`, `www.beargroupdcm.com`, and `bear-group-website.vercel.app`.
+
+The intended primary public domain is `https://beargroupdcm.com/`, matching the current SEO metadata. In GoDaddy DNS, the root/apex `A` record uses name `@` and value `216.198.79.1`; `www` is also connected in Vercel.
+
 ## SEO and Domain Metadata
 
 The site currently includes SEO metadata, JSON-LD business schema, `robots.txt`, `sitemap.xml`, `site.webmanifest`, and an SVG favicon. These URL-specific tags assume the final public domain will be `https://beargroupdcm.com/`.
