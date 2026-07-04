@@ -1,6 +1,6 @@
 # Bear Group DCM — Website
 
-This folder contains the **complete, ready-to-publish website** for Bear Group (Design + Construction Management). It is a single self-contained web page plus its images. Nothing needs to be "built" or compiled — it can go live exactly as-is.
+This folder contains the **complete, ready-to-publish website** for Bear Group (Design + Construction Management). It is a single static web page plus its images. Nothing needs to be "built" or compiled — it can go live exactly as-is.
 
 There are two ways to use this folder:
 
@@ -17,7 +17,8 @@ bear-group-website/
 ├── robots.txt        ← tells search engines they may index the site
 ├── sitemap.xml       ← lists the public homepage URL for search engines
 ├── site.webmanifest  ← browser/app metadata and favicon reference
-├── tests/            ← small verification scripts for SEO metadata
+├── tests/            ← small verification scripts for launch-critical checks
+├── docs/             ← saved parked content that is not currently public
 ├── assets/           ← images & logos used by the page
 │   ├── logo-bgdcm.png            (the BGDCM logo — transparent background)
 │   ├── favicon.svg               (browser tab icon)
@@ -32,27 +33,19 @@ bear-group-website/
 │   ├── client-redbrick.png
 │   ├── client-brighterdays.png
 │   ├── client-moleskine.png
-│   ├── proj-westhalf.png         (project images…)
-│   ├── proj-eckington-brewery.png
-│   ├── proj-atlantic-plumbing.png
-│   ├── proj-ring-building.png
-│   ├── proj-hq2.png
-│   ├── proj-residences.png
-│   ├── proj-moleskine.png
-│   ├── proj-street-dusk.png
-│   └── proj-central-place.png
+│   └── proj-*.png               (parked project images for possible future use)
 └── README.md         ← this file
 ```
 
-> **Keep `index.html` and the `assets/` folder together.** The page points at images using relative paths like `assets/proj-westhalf.png`. If you move or rename the folder, keep that structure intact.
+> **Keep `index.html` and the `assets/` folder together.** The page points at images using relative paths like `assets/hero-rotating-1.jpg` and `assets/logo-bgdcm.png`. If you move or rename the folder, keep that structure intact.
 
 ---
 
-## ⚠️ Two things to fix before going fully live
+## ⚠️ Launch checks before going fully live
 
-1. **The project photos are placeholders.** The images in `assets/proj-*.png` are stand-ins to show the layout. Replace them with real, licensed photography of the actual projects before launch. To swap one, just drop a new image into `assets/` with the **same filename** (or update the `src="assets/…"` reference in `index.html`).
-2. **The contact form opens the visitor's email app — it does not send mail to a server.** When someone clicks "Send inquiry," it pre-fills an email to `pbautista@beargroupdcm.com`. That works everywhere with zero setup, but if you want submissions captured automatically (e.g. into a spreadsheet or inbox), connect a free form service like **Formspree** or **Basin**, or add a serverless function. An AI coding assistant can wire this up in a few minutes — see Option B.
-3. **Confirm the final primary domain before submitting to Google.** The SEO metadata currently assumes the public site will use `https://beargroupdcm.com/`. If Vercel is configured to prefer `https://www.beargroupdcm.com/`, update `index.html`, `robots.txt`, and `sitemap.xml` before submitting the sitemap to Google Search Console.
+1. **The contact form opens the visitor's email app — it does not send mail to a server.** When someone clicks "Send inquiry," it pre-fills an email to `pbautista@beargroupdcm.com`. That works everywhere with zero setup, but if you want submissions captured automatically (e.g. into a spreadsheet or inbox), connect a free form service like **Formspree** or **Basin**, or add a serverless function. An AI coding assistant can wire this up in a few minutes — see Option B.
+2. **Confirm the final primary domain before submitting to Google.** The SEO metadata currently assumes the public site will use `https://beargroupdcm.com/`. If Vercel is configured to prefer `https://www.beargroupdcm.com/`, update `index.html`, `robots.txt`, and `sitemap.xml` before submitting the sitemap to Google Search Console.
+3. **Keep project-specific images private until approved.** The images in `assets/proj-*.png` support the parked project-index content in `docs/parked-content/project-work-sections.html`; they are not used on the current public homepage. If the project index is restored later, confirm all project names, details, and image rights before launch.
 
 ### SEO verification
 
@@ -63,6 +56,14 @@ node tests/seo-metadata.test.mjs
 ```
 
 This checks the page title, meta description, social-share tags, structured business data, favicon, `robots.txt`, and `sitemap.xml`.
+
+After launch-cleanup edits, run:
+
+```bash
+node tests/launch-cleanup.test.mjs
+```
+
+This checks for common pre-domain cleanup issues, such as leftover generated-bundler files, placeholder links, unescaped font URL ampersands, and retired CSS from removed page sections.
 
 ---
 
@@ -77,7 +78,7 @@ GitHub stores your website files online so Vercel can read them.
 2. Click the **+** (top-right) → **New repository**.
 3. Name it something like `bear-group-website`. Leave it Public (or Private — both work). Click **Create repository**.
 4. On the new repo page, click **"uploading an existing file"**.
-5. Open this `bear-group-website` folder on your computer, select **`index.html`** and the **`assets`** folder, and drag them into the browser upload area. Wait for them to finish uploading.
+5. Open this `bear-group-website` folder on your computer, select **`index.html`**, **`assets`**, **`robots.txt`**, **`sitemap.xml`**, and **`site.webmanifest`**, and drag them into the browser upload area. Wait for them to finish uploading.
 6. Click **Commit changes**.
 
 ✅ Your files are now on GitHub.
@@ -122,7 +123,7 @@ This points the real domain (e.g. `beargroupdcm.com`) at your Vercel site.
 If you'd rather an AI rebuild this inside a framework (React/Next.js, etc.), add a backend for the contact form, or extend it into a multi-page site, give the assistant **this entire folder** and the prompt below.
 
 > **Prompt to paste:**
-> "This folder contains a finished marketing website built as a single `index.html` file with an `assets/` image folder. Treat `index.html` as the **exact design reference** — match its layout, typography, colors, spacing, and interactions precisely. Recreate it in [your chosen framework, e.g. Next.js] using clean components, keep all images from `assets/`, and make it fully responsive (it already is — preserve the breakpoints). Then wire the contact form to actually send submissions to pbautista@beargroupdcm.com using a form service or serverless function. The design spec and tokens are documented in README.md — follow them."
+> "This folder contains a finished marketing website built as a single `index.html` file with an `assets/` image folder. Treat `index.html` as the **exact design reference** — match its layout, typography, colors, spacing, and interactions precisely. Recreate it in [your chosen framework, e.g. Next.js] using clean components, keep all live images from `assets/`, and make it fully responsive (it already is — preserve the breakpoints). Then wire the contact form to actually send submissions to pbautista@beargroupdcm.com using a form service or serverless function. The design spec and tokens are documented in README.md — follow them."
 
 Everything the assistant needs to reproduce the look is in the **Design Reference** section below.
 
@@ -154,29 +155,27 @@ Loaded free from Google Fonts (already linked in the `<head>`):
 - Centered content column: **max-width `1340px`**, side padding scales `20px → 32px → 44px` at larger screens.
 - A faint **44px × 44px grid** is painted across the page background (and a lighter version on the dark contact section).
 - **Breakpoints:** `680px` (tablet) and `960px` (desktop). Below 680px everything is single-column; the nav collapses into a hamburger menu.
-- Recurring motif: bordered "panel" blocks (services schedule table, project "drawing sheets," client grid, ledger) with mono labels like `[01]`, `SVC-01`, `SHT-02`.
+- Recurring motif: bordered "panel" blocks (services list, client grid, ledger, notable past-project groups) with mono labels like `[01]`, `SVC-01`, and `P-01`.
 
 ### Page sections (top to bottom)
 1. **Sticky header** — small BGDCM logo + "BEAR GROUP / Design + Construction Mgmt" lockup, nav links, "Inquire" button; hamburger menu on mobile.
-2. **Hero** — mono label, large headline ("Built environments, delivered with precision."), sub-paragraph, two buttons, a 4-cell spec bar, then a full-width project image.
-3. **Services `[01]`** — 5-row schedule-style table (SVC-01…05).
-4. **Project index `[02]`** — 9 "drawing sheet" cards in a responsive grid (1→2→3 columns), each with image, title, location, and a 4-field spec block.
-5. **About `[03]`** — principal bio (PJ Bautista) + a "ledger" of facts (Founded 2026, Experience, etc.).
-6. **Clients `[04]`** — 6 client logos in a 3-column grid, ordered by ranking, grayscale by default and full-color on hover; plus a "notable past projects" tag list.
-7. **Brand band** — large centered BGDCM logo with mono captions (tagline + coordinates).
-8. **Contact `[05]`** — dark section: heading, direct contact links, and the inquiry form.
-9. **Footer** — BGDCM logo, copyright, contact meta.
+2. **Hero** — rotating full-bleed project imagery, large headline ("Trusted leadership, built into every project."), sub-paragraph, and a 4-cell spec bar.
+3. **Services `[01]`** — 8-item services list (SVC-01…08).
+4. **About `[02]`** — principal bio (PJ Bautista) + a "ledger" of facts (Founded 2026, Experience, etc.).
+5. **Clients `[03]`** — 6 client logos in a responsive grid, plus grouped notable past-project content.
+6. **Contact `[04]`** — dark section: heading, direct contact details, and the inquiry form.
+7. **Brand band** — large centered BGDCM logo with mono captions.
 
 ### Interactions
 - Mobile hamburger toggles the menu (animated to an X).
 - Smooth-scroll anchor navigation.
-- Hover states on nav links, buttons, table rows, project images (subtle zoom), and client logos (grayscale → color).
+- Hover states on nav links, buttons, service rows, and client logos.
 - Contact form builds a `mailto:` link and opens the visitor's email client (no backend — see fix #2 above).
 
 ### Content/contact details currently in the site
 - Email: `pbautista@beargroupdcm.com`
-- Phone: `202.445.9764`
-- Location: Washington, D.C. Metro
+- Phone in structured data: `202.445.9764`
+- Address: `6800 Wisconsin Ave #1110, Chevy Chase, MD 20815`
 
 ---
 
